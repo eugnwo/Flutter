@@ -19,6 +19,7 @@ class RSPApp extends StatelessWidget {
         ),
         body: const GameBody(),
       ),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

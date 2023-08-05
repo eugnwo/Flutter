@@ -6,7 +6,9 @@ class GameResult extends StatelessWidget {
   final Result? result;
   final VoidCallback callback;
 
-  const GameResult({Key? key, required this.isDone, this.result, required this.callback}) : super(key: key);
+  const GameResult(
+      {Key? key, required this.isDone, this.result, required this.callback})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +16,18 @@ class GameResult extends StatelessWidget {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(result!.displayString, style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),),
-          SizedBox(height: 8),
-          TextButton(onPressed: () => callback.call(), child: Text('다시하기', style: TextStyle(fontSize: 24),),)
+          Text(
+            result!.displayString,
+            style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
+          TextButton(
+            onPressed: () => callback.call(),
+            child: const Text(
+              '다시하기',
+              style: TextStyle(fontSize: 24),
+            ),
+          )
         ],
       );
     }

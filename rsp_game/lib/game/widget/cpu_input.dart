@@ -13,11 +13,11 @@ class CpuInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(child: SizedBox.shrink()),
+        const Expanded(child: SizedBox.shrink()),
         InputCard(
           child: getCpuInput(),
         ),
-        Expanded(child: SizedBox.shrink()),
+        const Expanded(child: SizedBox.shrink()),
       ],
     );
   }

@@ -15,7 +15,10 @@ class RSPApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text('가위 바위 보!'),
+          title: const Text(
+            '가위 바위 보!',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
         body: const GameBody(),
       ),
@@ -23,4 +26,3 @@ class RSPApp extends StatelessWidget {
     );
   }
 }
-

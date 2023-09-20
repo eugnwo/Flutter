@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:actual/common/component/custom_text_form_field.dart';
 import 'package:actual/common/const/colors.dart';
 import 'package:actual/common/layout/default_layout.dart';
+import 'package:actual/common/view/root_tab.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -62,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: () async {
-                    const rawString = 'test@codefactory.ai:testtest'; // ID : 비밀번호
+                    final rawString = '$userName:$password'; // ID : 비밀번호
 
                     Codec<String, String> stringToBase64 = utf8.fuse(base64);
 
@@ -70,13 +71,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     final resp = await dio.post(
                       'http://$ip/auth/login',
-                      options: Options(
-                          headers: {
-                            'authorization' : 'Basic $token',
-                          }
-                      ),
+                      options: Options(headers: {
+                        'authorization': 'Basic $token',
+                      }),
                     );
 
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => RootTab()),
+                    );
                     print(resp.data);
                   },
                   style: ElevatedButton.styleFrom(
@@ -88,14 +90,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 TextButton(
                   onPressed: () async {
-                    const refreshToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAY29kZWZhY3RvcnkuYWkiLCJzdWIiOiJmNTViMzJkMi00ZDY4LTRjMWUtYTNjYS1kYTlkN2QwZDkyZTUiLCJ0eXBlIjoicmVmcmVzaCIsImlhdCI6MTY5NTIxNTkwOCwiZXhwIjoxNjk1MzAyMzA4fQ.bC_Pmg2pvKcUVDXK9g4flVNTIuPFnCFqrHRqTe15gZY';
+                    const refreshToken =
+                        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAY29kZWZhY3RvcnkuYWkiLCJzdWIiOiJmNTViMzJkMi00ZDY4LTRjMWUtYTNjYS1kYTlkN2QwZDkyZTUiLCJ0eXBlIjoicmVmcmVzaCIsImlhdCI6MTY5NTIxNTkwOCwiZXhwIjoxNjk1MzAyMzA4fQ.bC_Pmg2pvKcUVDXK9g4flVNTIuPFnCFqrHRqTe15gZY';
                     final resp = await dio.post(
                       'http://$ip/auth/token',
-                      options: Options(
-                          headers: {
-                            'authorization' : 'Bearer $refreshToken',
-                          }
-                      ),
+                      options: Options(headers: {
+                        'authorization': 'Bearer $refreshToken',
+                      }),
                     );
 
                     print(resp.data);

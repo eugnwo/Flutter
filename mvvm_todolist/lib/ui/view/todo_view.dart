@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:mvvm_todolist/common/const/data.dart';
+import 'package:mvvm_todolist/ui/viewModel/todo_view_model.dart';
+import 'package:provider/provider.dart'; // Assuming you're using Provider for state management
 
 class TodoView extends StatefulWidget {
   const TodoView({Key? key}) : super(key: key);
@@ -10,9 +10,7 @@ class TodoView extends StatefulWidget {
 }
 
 class _TodoViewState extends State<TodoView> {
-  final list = Hive.box(todoList);
   late TextEditingController controller;
-  DateTime now = DateTime.now();
 
   @override
   void initState() {
@@ -28,22 +26,24 @@ class _TodoViewState extends State<TodoView> {
 
   @override
   Widget build(BuildContext context) {
+    var viewModel = Provider.of<TodoViewModel>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.amberAccent,
         elevation: 0,
         centerTitle: true,
         title: const Text(
-          'Todo List',
+          '뚜루뚜두 리스트',
         ),
       ),
       body: Column(
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: list.length,
+              itemCount: viewModel.items.length,
               itemBuilder: (_, index) {
-                final item = list.getAt(index) as Map;
+                final item = viewModel.items[index];
                 return Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -54,8 +54,8 @@ class _TodoViewState extends State<TodoView> {
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(item['title'].toString()),
-                          Text('동록 : ${item['day']}'),
+                          Text(item.title),
+                          Text('등록 ${item.day}'),
                         ]),
                   ),
                 );
@@ -69,7 +69,7 @@ class _TodoViewState extends State<TodoView> {
         onPressed: () {
           showModalBottomSheet(
             context: context,
-            builder: (_) {
+            builder: (context) {
               return SizedBox(
                 height: 300,
                 child: Column(
@@ -79,18 +79,15 @@ class _TodoViewState extends State<TodoView> {
                           horizontal: 20.0, vertical: 20.0),
                       child: TextFormField(
                         controller: controller,
-                        decoration: const InputDecoration(hintText: 'Title'),
+                        decoration: const InputDecoration(hintText: '제목'),
                       ),
                     ),
                     const Spacer(),
                     GestureDetector(
                       onTap: () {
-                        setState(() {
-                          list.put(list.length.toString(), {
-                            'title': controller.text,
-                            'day': DateTime.now(),
-                          });
-                        });
+                        viewModel.add(controller.text);
+                        controller.clear();
+                        Navigator.pop(context);
                       },
                       child: Container(
                         height: 50,
@@ -101,7 +98,7 @@ class _TodoViewState extends State<TodoView> {
                         ),
                         child: const Center(
                           child: Text(
-                            '추가',
+                            '등록',
                             style: TextStyle(
                               color: Colors.white,
                             ),

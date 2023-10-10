@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:statemanagement_riverpod/layout/default_layout.dart';
 import 'package:statemanagement_riverpod/screen/auto_dispose_modifier_screen.dart';
+import 'package:statemanagement_riverpod/screen/code_generation_screen.dart';
 import 'package:statemanagement_riverpod/screen/family_modifier_screen.dart';
 import 'package:statemanagement_riverpod/screen/future_provider_screen.dart';
 import 'package:statemanagement_riverpod/screen/listen_provider_screen.dart';
+import 'package:statemanagement_riverpod/screen/provider_screen.dart';
 import 'package:statemanagement_riverpod/screen/select_provider_screen.dart';
 import 'package:statemanagement_riverpod/screen/state_notifier_provider.dart';
 import 'package:statemanagement_riverpod/screen/state_provider_screen.dart';
@@ -98,6 +100,26 @@ class HomeScreen extends StatelessWidget {
               );
             },
             child: const Text('SelectProviderScreen'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const ProviderScreen(),
+                ),
+              );
+            },
+            child: const Text('ProviderScreen'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const CodeGenerationScreen(),
+                ),
+              );
+            },
+            child: const Text('CodeGenerationScreen'),
           ),
         ],
       ),

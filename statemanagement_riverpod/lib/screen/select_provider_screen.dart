@@ -23,7 +23,7 @@ class SelectProviderScreen extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            /*Text(
               state.name,
             ),
             Text(
@@ -31,7 +31,7 @@ class SelectProviderScreen extends ConsumerWidget {
             ),
             Text(
               state.hasBought.toString(),
-            ),
+            ),*/
             ElevatedButton(
               onPressed: () {
                 ref.read(selectProvider.notifier).toggleIsSpicy();
